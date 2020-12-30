@@ -1,0 +1,84 @@
+---
+title: Turn GOV.UK Accounts on and off
+weight: 34
+last_reviewed_on: 2020-12-30
+review_in: 6 months
+---
+
+#  Turn GOV.UK Accounts on and off
+
+You can turn GOV.UK Accounts on and off. When you turn off GOV.UK Accounts, the following happens with immediate effect:
+
+- new users are not be able to sign up for GOV.UK Accounts
+- existing users can no longer access their accounts or the data stored in their accounts
+- all sign in attempts are redirected to an error page
+
+## Deciding to turn off GOV.UK Accounts
+
+You may need to turn off GOV.UK Accounts because of a:
+
+- security incident or data leak
+- major breaking bug
+- request from the senior management team (SMT)
+
+Before you turn off GOV.UK Accounts, you must [something about escalation & decision making process].
+
+## Before you start
+
+To turn GOV.UK Accounts on and off, you must be a GDS GOV.UK programme developer with:
+
+- access to the GDS VPN
+- a GDS GitHub account
+- access to the GOV.UK Accounts production environment through your GDS GitHub account
+
+## Turn GOV.UK Accounts off
+
+1. Sign in to the GDS VPN using the command line or the Cisco AnyConnect Secure Mobility Client
+
+1. Go to [GDS Concourse homepage](https://cd.gds-reliability.engineering) and sign in using your GDS GitHub account credentials.
+
+    On the left hand side of the page, you will see a list of Concourse groups and pipelines.
+
+1. Select the __govuk-tools__ group and then select the [__govuk-account-manager-prototype__ pipeline](https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-account-manager-prototype).
+
+    You can now see the deploy pipeline for the GOV.UK Accounts Manager prototype.
+
+    The `suspend` and `resume` jobs are at the start of the deploy pipeline. These jobs affect both the staging and production environments.
+
+1. Select __suspend__ to go to the suspend job screen.
+
+1. Select the icon in the top right of the screen to start the job and trigger the build. The suspend job:
+
+    - maps the GOV.UK Accounts URL to the [GOV.UK Accounts static error page](https://govuk-account-static-errors.london.cloudapps.digital/)
+    - unmaps the GOV.UK Accounts app from the GOV.UK Accounts URL
+    - maps the attribute store URL to the GOV.UK Accounts static error page
+    - unmaps the attribute store app from the attribute store URL
+
+    If the suspend job completes successfully, the top banner will turn green.
+
+## Check that GOV.UK Accounts is off
+
+To check that GOV.UK Accounts is off, go to the following webpages and check that they all display the [GOV.UK Accounts static error page](https://govuk-account-static-errors.london.cloudapps.digital/):
+
+- [GOV.UK Accounts homepage](https://www.account.publishing.service.gov.uk)
+- [GOV.UK Accounts new account creation webpage](https://www.account.publishing.service.gov.uk/new-account)
+- [Brexit transition checker](https://www.gov.uk/transition)
+- [Brexit transition checker questions page](https://www.gov.uk/transition-check/questions)
+
+Finally, go to the [Brexit transition checker results page](https://www.gov.uk/transition-check/results?c[]=living-ie) and select __Subscribe__ at the bottom of the page, and the banner link at the top of the page.
+
+Both of these options should take you to a page titled "Get email arts about your results".
+
+If any of these tests fail, you can check the [GOV.UK Accounts Manager prototype concourse folder on GitHub](https://github.com/alphagov/govuk-account-manager-prototype/tree/main/concourse), or contact GOV.UK Accounts team support. Different processes for in hours vs out of hours.
+
+## Change the static error page
+
+If you need to change the content of the [GOV.UK Accounts static error page](https://govuk-account-static-errors.london.cloudapps.digital/), go to the [GOV.UK Accounts static error page GitHub repo](https://github.com/alphagov/govuk-account-static-errors/).
+
+## Turn GOV.UK Accounts on
+
+To turn GOV.UK Accounts back on
+
+if you turn it back on, you should be able to see a sign in page, choose how you want to stay up to date page, rather than the error page
+
+make sure you can create an account to ensure everything is back up and running
