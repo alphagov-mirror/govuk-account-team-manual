@@ -10,32 +10,36 @@ review_in: 6 months
 If a secret expires or is compromised, you will need to rotate it.
 This is a currently a manual process.
 
-This content explains how secrets are used, what secrets we have, and
-how to rotate them should the need arise.
+This content explains:
 
-If a secret is compromised, this is a security incident.  Follow [the
+- how secrets are used
+- what secrets we have
+- how to rotate secrets if needed
+
+If a secret is compromised, this is a security incident. Follow [the
 incident management process][] as well as rotating the secret.
 
 [the incident management process]: /incident
 
 ## Prerequisites
 
-You need the [gds-cli][] tool installed to manage secrets.
+You must [install the gds-cli tool][] to manage secrets.
 
-[gds-cli]: https://github.com/alphagov/gds-cli
+[gds-cli]: https://github.com/alphagov/gds-cli#installation
 
 ## Concourse secrets
 
 All of our secrets are used by our Concourse pipelines, and are stored
 as Concourse secrets.
 
-Some of them are used by the pipeline to perform its task, for example
-[the daily statistics task][] needs an OAuth token.  Some of them are
-used by an app, and are set by its deployment task, for example the
+Some secrets are used by the pipeline to perform its task. For example,
+[the daily statistics task][] needs an OAuth token.
+
+Some secrets are used by an app and are set by the app's deployment task. For example, the
 [GOV.UK Notify API key][].
 
-Secrets are referenced in the Concourse configuration with `((secret
-name))` so, to take the daily statistics task as an example, here
+Secrets are referenced in the Concourse configuration using `((secret
+name))`. For example with the daily statistics task, the
 `report-bearer-token` is a secret made available to the task through
 the `BEARER_TOKEN` environment variable:
 
@@ -47,8 +51,7 @@ the `BEARER_TOKEN` environment variable:
     BEARER_TOKEN: ((report-bearer-token))
 ```
 
-You can list all secrets for the GOV.UK Concourse team with the
-gds-cli:
+To list all secrets for the GOV.UK Concourse team, run the following in the gds-cli:
 
 ```
 $ gds cd secrets ls cd-govuk-tools
@@ -59,11 +62,9 @@ $ gds cd secrets ls cd-govuk-tools
 
 ### Rotating a secret
 
-To rotate a secret:
-
 1. Generate a new secret value, which varies per secret.
 
-2. Set the new value with the gds-cli:
+2. Set the new value using the gds-cli:
 
     ```
     $ gds cd secrets add cd-govuk-tools <pipeline-name>/<secret-name> "<value>"
@@ -73,9 +74,8 @@ To rotate a secret:
 
 ## How to rotate the secrets we have
 
-In general secrets can be rotated by generating a new value and
-setting the value with the gds-cli.  Those few secrets which need more
-care are explained further.
+In general you rotate secrets by generating a new value and
+setting the value with the gds-cli. You must use a different method for the following secrets.
 
 ### Secrets used by multiple pipelines
 
@@ -87,7 +87,7 @@ Generate a new API key in [Grafana][], and deactivate the old API key.
 
 #### `paas-username` and `paas-password`
 
-The password can be changed by [triggering a password reset][], which gets sent to the govuk-accounts-developers Google Group.
+Change the password by [triggering a password reset][], which gets sent to the govuk-accounts-developers Google Group.
 
 [triggering a password reset]: https://admin.london.cloud.service.gov.uk/password/request-reset
 
@@ -97,14 +97,14 @@ Generate a new DSN from the Sentry project settings page.
 
 #### `slack_webhook_url`
 
-Inform IT Support that our Slack webhook has been leaked, and that we
+Tell IT Support that our Slack webhook has been leaked, and that we
 need a new one.
 
 ### Secrets used by the account manager
 
 #### `basic-auth-username` and `basic-auth-password`
 
-These are arbitrary strings.  After changing them, update the
+These are arbitrary strings. After changing them, update the
 "deployed applications" Trello card.
 
 #### `bigquery-credentials-production`
@@ -123,11 +123,11 @@ API key.
 
 #### `oidc-pepper-production` and `oidc-pepper-staging`
 
-Generate an arbitrary string with `rake secret`.
+Generate an arbitrary string using `rake secret`.
 
 This secret is used to [generate subject identifiers][], and so
 rotating it will cause services to see a new subject identifier for a
-returning user.  This means that services won't be able to identify
+returning user. This means that services will not be able to identify
 returning users, and will treat them as new users.
 
 If this secret needs to be rotated, we will need to engage with other
@@ -141,14 +141,14 @@ Generate a new RSA private key.
 
 #### `password-pepper-production` and `password-pepper-staging`
 
-Generate an arbitrary string with `rake secret`.
+Generate an arbitrary string using `rake secret`.
 
 This secret is used to [hash account passwords][], and so rotating it
-will invalidate all of the current passwords.  This means that users
+will invalidate all of the current passwords. This means that users
 will have to reset their password to log in.
 
 If this secret needs to be rotated on short notice, we may want to
-send an email to all users explaining the problem.  If it can be
+send an email to all users explaining the problem. If it can be
 rotated over a longer period, we could rehash passwords when users log
 in, and only disable the old pepper when most users have been changed.
 This is a feature which would need to be implemented.
@@ -169,7 +169,7 @@ log out all users.
 
 #### `zendesk-api-username` and `zendesk-api-key`
 
-Inform User Support that our Zendesk credentials have been leaked, and
+Tell User Support that our Zendesk credentials have been leaked, and
 that we need new ones.
 
 ### Secrets used by the attribute service
