@@ -66,12 +66,12 @@ If you cannot access this dashboard, speak to IT using Slack or [raise an IT req
 
 ## Give GOV.UK Seal access to your Github name
 
-The Account team use [seal](https://github.com/alphagov/seal) to give helpful prompts on slack. One example is the morning reminder for Pull requests that require review.
+The Account team use [Seal Slack bot](https://github.com/alphagov/seal) to give helpful prompts on Slack. One example is the morning reminder for pull requests that require review.
 
-Seal will need to know which github user is in which team. This configuration is described in the [alphagov.yml](https://github.com/alphagov/seal/blob/master/config/alphagov.yml#L128-L162) file.
+Seal needs to know which GitHub user is in which team. This configuration is described in the [Seal alphagov.yml file](https://github.com/alphagov/seal/blob/master/config/alphagov.yml#L128-L162).
 
-If your username is not already on the list, add it, raise a pull request and ask other team members to reivew.
+If your username is not already on the list, add your username to the list and raise a pull request, asking other team members to review.
 
-Once it has been merged the change is automatically deployed to the heroku app.
+Once the pull request has been merged, the change is automatically deployed to the heroku app.
 
-[An example pull request for reference](https://github.com/alphagov/seal/pull/205/files).
+See this [example Seal pull request](https://github.com/alphagov/seal/pull/205/files) for reference.
