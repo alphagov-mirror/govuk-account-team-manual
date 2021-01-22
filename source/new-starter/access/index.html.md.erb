@@ -63,3 +63,15 @@ When IT tell you the request is complete, check that you can access the [GOV.UK 
 Check that you have access to the [GOV.UK Account Grafana dashboard](https://grafana-paas.cloudapps.digital/d/_g_9aRoMk/gov-uk-accounts).
 
 If you cannot access this dashboard, speak to IT using Slack or [raise an IT request]([GDS IT & Estates Web Help Desk](https://gdshelpdesk.digital.cabinet-office.gov.uk/helpdesk/WebObjects/Helpdesk.woa).
+
+## Give GOV.UK Seal access to your Github name
+
+The Account team use [seal](https://github.com/alphagov/seal) to give helpful prompts on slack. One example is the morning reminder for Pull requests that require review.
+
+Seal will need to know which github user is in which team. This configuration is described in the [alphagov.yml](https://github.com/alphagov/seal/blob/master/config/alphagov.yml#L128-L162) file.
+
+If your username is not already on the list, add it, raise a pull request and ask other team members to reivew.
+
+Once it has been merged the change is automatically deployed to the heroku app.
+
+[An example pull request for reference](https://github.com/alphagov/seal/pull/205/files).
